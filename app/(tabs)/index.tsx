@@ -10,7 +10,8 @@ import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from "reac
 export default function Index() {
   const router = useRouter(); //钩子
 
-  const { data :movies, 
+  const { 
+    data :movies, 
     loading: moviesLoading, 
     error: moviesError } = useFetch(() => fetchMovies(
       { query: "" 
