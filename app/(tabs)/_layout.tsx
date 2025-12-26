@@ -54,7 +54,7 @@ const _Layout = () => {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) =>(
-           <TabIcon focused={focused} icon={icons.home} title="Home" />
+           <TabIcon focused={focused} icon={icons.home} title="首页" />
           )
         }}
       />
@@ -64,7 +64,7 @@ const _Layout = () => {
           title: "Search",
           headerShown: false,
           tabBarIcon: ({ focused }) =>(
-            <TabIcon focused={focused} icon={icons.search} title="Search" />
+            <TabIcon focused={focused} icon={icons.search} title="搜索" />
           )
         }}
       />
@@ -74,7 +74,7 @@ const _Layout = () => {
           title: "Saved",
           headerShown: false,
           tabBarIcon: ({ focused }) =>(
-            <TabIcon focused={focused} icon={icons.save} title="Saved" />
+            <TabIcon focused={focused} icon={icons.save} title="收藏" />
           )
         }}
       />
@@ -84,7 +84,7 @@ const _Layout = () => {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) =>(
-            <TabIcon focused={focused} icon={icons.person} title="Profile" />
+            <TabIcon focused={focused} icon={icons.person} title="个人" />
           )
         }}
       />
