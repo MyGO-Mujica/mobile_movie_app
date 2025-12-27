@@ -16,6 +16,7 @@ interface Movie {
 }
 
 interface TrendingMovie {
+  $id: string; // Appwrite 文档唯一标识符
   searchTerm: string;
   movie_id: number;
   title: string;
