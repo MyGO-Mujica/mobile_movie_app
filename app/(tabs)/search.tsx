@@ -7,6 +7,8 @@ import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 
 import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
+import { updateSearchCount } from "@/services/appwrite";
+
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState(" ");
 
@@ -29,6 +31,11 @@ const Search = () => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies(); // 有搜索词：执行搜索
+
+         // 仅在有搜索结果时记录搜索记录
+          if (movies?.length! > 0 && movies?.[0]) {
+          await updateSearchCount(searchQuery, movies[0]);
+        }
       } else {
         reset(); // 无搜索词：重置状态
       }
