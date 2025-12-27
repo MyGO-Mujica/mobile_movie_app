@@ -1,5 +1,6 @@
 import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
+import TrendingCard from "@/components/TrendingCard";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
@@ -7,7 +8,6 @@ import { getTrendingMovies } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from "react-native";
-import TrendingCard from "@/components/TrendingCard";
 export default function Index() {
   const router = useRouter(); 
 
@@ -21,9 +21,7 @@ export default function Index() {
     data :movies, 
     loading: moviesLoading, 
     error: moviesError } = useFetch(() => fetchMovies(
-      { query: "" 
-
-      }));
+      { query: "" }));
 
   return (
     <View className="flex-1 bg-primary">
@@ -71,7 +69,7 @@ export default function Index() {
                   renderItem={({ item, index }) => (
                    <TrendingCard movie={item} index={index} />
                   )}
-                  keyExtractor={(item) => item.movie_id.toString()}
+                  keyExtractor={(item) => item.$id}
                  
                 />
               </View>
