@@ -1,50 +1,239 @@
-# Welcome to your Expo app 👋
+# 🎬 Mobile Movie App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+基于 React Native 开发的移动端电影应用，集成 TMDB API 提供丰富的电影数据，并通过 Appwrite 后端服务实现数据统计与智能推荐功能。
 
-## Get started
+## ✨ 功能概览
 
-1. Install dependencies
+### 已实现功能
+
+- 🏠 **首页** - 展示最新热门电影及基于数据统计的个性化推荐内容
+- 🔍 **搜索** - 支持实时电影搜索，采用防抖技术优化性能
+- 🎯 **智能推荐** - 基于用户搜索历史数据的"猜你喜欢"推荐模块
+- 📊 **搜索统计** - 自动记录并统计用户搜索行为数据
+- 🎭 **电影详情** - 展示完整的电影信息与数据统计
+- 🎨 **界面设计** - 采用 NativeWind (Tailwind CSS) 构建现代化用户界面
+
+### 待实现功能
+
+- 💾 **收藏功能 (Saved)** - 用户电影收藏管理
+- 👤 **个人中心 (Profile)** - 用户个人信息与偏好设置
+
+## 🎯 技术特点
+
+### 📈 基于数据统计的推荐系统
+
+本应用采用轻量级推荐策略，通过分析用户搜索行为实现内容推荐：
+
+- 利用 Appwrite 数据库持久化存储用户搜索记录
+- 统计分析搜索频率，识别热门内容
+- 在首页"猜你喜欢"模块展示搜索热度最高的电影
+- 数据实时更新，确保推荐内容的时效性
+
+该方案无需引入复杂的机器学习模型，仅通过搜索频率统计即可提供有效的个性化推荐。
+
+## 🛠️ 技术架构
+
+### 核心框架
+- **React Native** - 跨平台移动应用开发框架
+- **Expo** - React Native 开发工具集与部署平台
+- **Expo Router** - 基于文件系统的路由解决方案
+- **TypeScript** - JavaScript 的类型安全超集
+
+### UI 层技术
+- **NativeWind** - React Native 环境下的 Tailwind CSS 实现
+- **Tailwind CSS** - 实用优先的 CSS 框架
+- **@react-native-masked-view/masked-view** - 视图遮罩效果组件（应用于渐变排名显示）
+- **react-native-safe-area-context** - 设备安全区域适配方案
+
+### 后端服务
+- **Appwrite** - 开源 BaaS (Backend as a Service) 平台
+  - 数据库服务：持久化用户搜索记录
+  - 查询服务：实时统计与数据排序
+  - 文档管理：完整的 CRUD 操作支持
+
+### 数据接口
+- **TMDB API (The Movie Database)** - 电影数据接口服务
+  - 热门电影列表获取
+  - 电影搜索功能
+  - 详细电影信息查询（包含评分、类型、预算、票房等数据）
+
+### 状态管理
+- **自定义 useFetch Hook** - 封装异步数据请求与状态管理逻辑
+- **React Hooks** - 使用 useState、useEffect、useCallback 等标准 Hooks
+
+## 📁 项目结构
+
+```
+mobile_movie_app/
+├── app/                      # 应用页面（基于文件路由）
+│   ├── (tabs)/              # 底部导航标签页
+│   │   ├── index.tsx        # 首页 - 热门电影 + 推荐
+│   │   ├── search.tsx       # 搜索页
+│   │   ├── saved.tsx        # 收藏页 (TODO)
+│   │   └── profile.tsx      # 个人中心 (TODO)
+│   ├── movies/
+│   │   └── [id].tsx         # 电影详情页（动态路由）
+│   └── _layout.tsx          # 根布局
+├── components/              # 可复用组件
+│   ├── MovieCard.tsx        # 电影卡片
+│   ├── TrendingCard.tsx     # 推荐电影卡片
+│   └── SearchBar.tsx        # 搜索栏
+├── services/                # 服务层
+│   ├── api.ts              # TMDB API 请求
+│   ├── appwrite.ts         # Appwrite 数据库操作
+│   └── useFetch.ts         # 自定义数据请求 Hook
+├── constants/              # 常量配置
+│   ├── icons.ts            # 图标资源
+│   └── images.ts           # 图片资源
+├── interfaces/             # TypeScript 类型定义
+│   └── interfaces.d.ts
+└── assets/                 # 静态资源
+```
+
+## 🚀 快速开始
+
+### 前置要求
+
+- Node.js 18+
+- npm 或 yarn
+- Expo Go 应用（用于真机测试）
+
+### 安装步骤
+
+1. **克隆项目**
+
+   ```bash
+   git clone https://github.com/MyGO-Mujica/mobile_movie_app.git
+   cd mobile_movie_app
+   ```
+
+2. **安装依赖**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **配置环境变量**
+
+   创建 `.env` 文件并填入以下配置：
+
+   ```env
+   # TMDB API 配置
+   EXPO_PUBLIC_MOVEIE_API_KEY=your_tmdb_api_key_here
+   
+   # Appwrite 配置
+   EXPO_PUBLIC_APPWRITE_PROJECT_ID=your_project_id
+   EXPO_PUBLIC_APPWRITE_DATABASE_ID=your_database_id
+   EXPO_PUBLIC_APPWRITE_COLLECTION_ID=your_collection_id
+   ```
+
+   **获取方式：**
+   - TMDB API Key: [https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)
+   - Appwrite: [https://cloud.appwrite.io/](https://cloud.appwrite.io/)
+
+4. **启动应用**
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+5. **在设备上运行**
+   - 扫描二维码使用 Expo Go 打开（Android/iOS）
+   - 或按 `a` 在 Android 模拟器中打开
+   - 或按 `i` 在 iOS 模拟器中打开
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🗄️ Appwrite 数据库配置
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 创建集合 (Collection)
 
-## Get a fresh project
+在 Appwrite 中创建名为 `metrics` 的集合，包含以下字段：
 
-When you're ready, run:
+| 字段名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| `searchTerm` | String | ✅ | 搜索关键词 |
+| `movie_id` | Integer | ✅ | TMDB 电影 ID |
+| `title` | String | ✅ | 电影标题 |
+| `count` | Integer | ✅ | 搜索次数 |
+| `poster_url` | String | ❌ | 电影海报 URL |
 
-```bash
-npm run reset-project
+### 权限设置
+
+确保集合权限允许：
+- ✅ 读取（Read）
+- ✅ 创建（Create）
+- ✅ 更新（Update）
+
+## 📱 功能演示
+
+### 首页
+- 展示最新热门电影（3列网格布局）
+- "猜你喜欢"横向滚动列表（基于搜索统计）
+- 渐变数字排名效果
+
+### 搜索页
+- 实时搜索（500ms 防抖）
+- 搜索结果网格展示
+- 自动记录搜索行为到 Appwrite
+
+### 电影详情页
+- 电影海报和基本信息
+- 评分、时长、上映年份
+- 电影概述和类型
+- 预算和票房数据
+- 制片公司信息
+
+## 🎨 主题配色
+
+```javascript
+colors: {
+  primary: "#030014",      // 深色背景
+  secondary: "#151312",    // 次级背景
+  light: {
+    100: "#D6C7FF",        // 浅紫色
+    200: "#A8B5DB",        // 浅蓝色
+    300: "#9CA4AB",        // 灰色
+  },
+  dark: {
+    100: "#221F3D",        // 深紫色
+    200: "#0F0D23",        // 更深紫色
+  },
+  accent: "#8BD3DD",       // 淡青色强调色
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🔧 核心功能实现
 
-## Learn more
+### 搜索防抖
 
-To learn more about developing your project with Expo, look at the following resources:
+```typescript
+useEffect(() => {
+  const timeoutId = setTimeout(async () => {
+    if (searchQuery.trim()) {
+      await loadMovies();
+    }
+  }, 500);
+  
+  return () => clearTimeout(timeoutId);
+}, [searchQuery]);
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 搜索记录统计
 
-## Join the community
+```typescript
+// 搜索完成后自动记录
+useEffect(() => {    
+  if (movies?.length > 0 && movies?.[0]) {
+    updateSearchCount(searchQuery, movies[0]);
+  }
+}, [movies]);
+```
 
-Join our community of developers creating universal apps.
+### 推荐算法
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```typescript
+// 获取搜索次数最多的前 5 部电影
+const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+  Query.limit(5),
+  Query.orderDesc("count"),
+]);
+```
