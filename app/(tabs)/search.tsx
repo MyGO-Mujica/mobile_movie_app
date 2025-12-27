@@ -32,10 +32,6 @@ const Search = () => {
       if (searchQuery.trim()) {
         await loadMovies(); // 有搜索词：执行搜索
 
-         // 仅在有搜索结果时记录搜索记录
-          if (movies?.length! > 0 && movies?.[0]) {
-          await updateSearchCount(searchQuery, movies[0]);
-        }
       } else {
         reset(); // 无搜索词：重置状态
       }
@@ -44,6 +40,12 @@ const Search = () => {
     return () => clearTimeout(timeoutId); // 清理定时器
   }, [searchQuery]);
 
+  useEffect(() => {    
+      // 仅在有搜索结果时记录搜索记录
+       if (movies?.length! > 0 && movies?.[0]) {
+            updateSearchCount(searchQuery, movies[0]);
+         }
+      }, [movies]);
   return (
     <View className="flex-1 bg-primary">
         <Image source={images.bg} className="flex-1 absolute w-full z-0" resizeMode="cover"></Image>
